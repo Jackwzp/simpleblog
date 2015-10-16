@@ -1,32 +1,33 @@
 extends ../layout
 
 block content
-  h1 Register
-  p Please register for an account
-  if errorss
-      ul.errorss.alert.alert-danger
+    .container
+        h1 Register
+        p Please register for an account
         if errorss
-            each error in errorss
-                li #{error.msg}
-  form(method='post', action='/users/register', enctype='multipart/form-data')
-    .form-group
-        label Name
-        // The value=name field is the variable passed into res.render in users.js
-        input.form-control(name='name', type='text', placeholder='Name', value=name)
-    .form-group
-        label Email
-        // the value=email is same as the value=name above; also the others fields below
-        input.form-control(name='email', type='email', placeholder='Email', value=email)
-    .form-group
-        label Username
-        input.form-control(name='username', type='text', placeholder='Username', value=username)
-    .form-group
-        label Password
-        input.form-control(name='password', type='password', placeholder='Password', value=password)
-    .form-group
-        label Confirm Password
-        input.form-control(name='password2', type='password', placeholder='Confirm Password', value=password2)
-    .form-group
-        label Profile Image
-        input.form-control(name='profileimg', type='file')
-    <button type="submit" class="btn btn-default">Register</button>
+          ul.errorss.alert.alert-danger
+            if errorss
+                each error in errorss
+                    li #{error.msg}
+        form(method='post', action='/users/register', enctype='multipart/form-data')
+        .form-group
+            label Name
+            // The value=name field is the variable passed into res.render in users.js
+            input.form-control(name='name', type='text', placeholder='Name', value=name)
+        .form-group
+            label Email
+            // the value=email is same as the value=name above; also the others fields below
+            input.form-control(name='email', type='email', placeholder='Email', value=email)
+        .form-group
+            label Username
+            input.form-control(name='username', type='text', placeholder='Username', value=username)
+        .form-group
+            label Password
+            input.form-control(name='password', type='password', placeholder='Password', value=password)
+        .form-group
+            label Confirm Password
+            input.form-control(name='password2', type='password', placeholder='Confirm Password', value=password2)
+        .form-group
+            label Profile Image
+            input.form-control(name='profileimg', type='file')
+        <button type="submit" class="btn btn-default">Register</button>

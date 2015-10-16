@@ -17,6 +17,10 @@ a {
     
 }
 
+ul.success {
+    padding: 15px;
+}
+
 ul.success li, ul.info li, ul.error li {
     margin: 20px 0 20px 0;
     padding: 15px;
@@ -41,4 +45,44 @@ ul.error li {
     color: #3c763d;
     background: red;
     border-color:  red;
+}
+
+.post {
+    border-style: solid;
+    border-width: 2px;
+    border-color: grey;
+    border-radius: 10px;
+    margin-top: 25px;
+    padding: 15px;
+}
+
+.post h1 {
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+.post .meta {
+    background-color: grey;
+    border-radius: 5px;
+    padding: 5px;
+    width: 
+}
+
+.post img {
+    width: 100%;
+}
+
+.category-list {
+    margin-top: 30px;
+}
+
+
+.catedit {
+    float: right;
+    margin: 0 5px 0 5px;
+}
+
+.list-group-item .badge {
+    float: none;
+    margin-left: 10px;
 }

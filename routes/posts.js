@@ -5,27 +5,20 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
+var upload = multer({dest: './public/images/uploads'}); 
+var authentication = require('./authenticate');
 var Post = require('../model/post');
 var Category = require('../model/category');
 
-var upload = multer({dest: './public/images/uploads'}); 
+
 
 
 //============================
 //      Post Home Page
 //============================       
 
-function checkAuthentication(req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.redirect('/users/login');
-    }
-}
-
-/* GET posts home page. */
-router.get('/', checkAuthentication, function(req, res, next) {
-    Post.find( {author: req.user.name}, {title: 1, date: 1}, function(err, posts) {
+router.get('/', authentication.check, function(req, res, next) {
+    Post.find( {author: req.user.name}, function(err, posts) {
         if(err) console.error(err);
         //console.log(posts);
         res.render('posts/posts', { 
@@ -40,7 +33,7 @@ router.get('/', checkAuthentication, function(req, res, next) {
 //============================       
 
 // Get add post view
-router.get('/newpost', checkAuthentication, function(req,res) {
+router.get('/newpost', authentication.check, function(req,res) {
     Category.find({author: req.user.name}, {title: 1}, function(err, categories) {
         if (err) console.error(err);      
         res.render('posts/newpost', {
@@ -53,17 +46,27 @@ router.get('/newpost', checkAuthentication, function(req,res) {
 
 
 // Add new post to DB
-router.post('/newpost', function(req,res) {
+// The upload.single('<name>'), the <name> must match the one in the form in view
+router.post('/newpost', authentication.check, upload.single('postimage'), function(req,res) {
     // get form values
     var title = req.body.title;
     var content = req.body.content;
     var category = req.body.category;
 
+    // check for image
+    if (req.file) {
+        console.log("Uploading file...");
+        var postImgName = req.file.filename;
+    } else {        
+        var postImgName = 'no.png';
+    }
+
     var newPost = new Post({
         title: title, 
         content: content,
         author: req.user.name,
-        category: category
+        category: category,
+        postimage: postImgName
     });
 
     // the post param in callback is returned by mongoose
@@ -84,58 +87,18 @@ router.post('/newpost', function(req,res) {
 //============================
 
 // edit post page
-router.get('/edit', checkAuthentication, function(req, res) {
+router.get('/edit', authentication.check, function(req, res) {
     res.render('posts/edit');
 });
 
 // insert modified post into db
-router.put('/:id', checkAuthentication, function(req, res) {
+router.put('/:id', authentication.check, function(req, res) {
     res.send('editing single post');
 });
 
 //============================
 //      Delete Post
 //============================       
-
-
-//============================
-//      Add New Category
-//============================              
-
-router.get('/newcategory', checkAuthentication, function(req, res) {
-    res.render('posts/newcategory', {title: 'Category'});
-});
-
-// add new category to DB
-router.post('/newcategory', checkAuthentication, function(req, res) {
-    var title = req.body.title;
-
-    Category.findOne({author: req.user.name, title: title}, {title: 1}, function(err, data) {
-        console.log(data);
-        // Category doesn't exist...create new one
-        if (data == null) {
-            var newcategory = new Category({
-                title: title,
-                author: req.user.name
-            });
-
-            Category.createCategory(newcategory, function(err, category) {
-                if (err) throw err;
-                console.log(category);
-            });
-
-            // Success flash message
-            req.flash('success', title + ' Created Successfully!');
-            res.redirect('/posts/newcategory');
-
-        }
-        else { // Category already exists...display error
-            // Success flash message
-            req.flash('error', title + ' already exists...try another one.');
-            res.redirect('/posts/newcategory');
-        }
-    });
-});
 
 
 
@@ -147,8 +110,8 @@ router.post('/newcategory', checkAuthentication, function(req, res) {
 //============================
 //      Individual Post View
 //============================       
-router.get('/:id', checkAuthentication, function(req,res) {
-    res.send('requesting single post view');
+router.get('/:id', authentication.check, function(req,res) {
+    res.send('requesting single post view named ' + req.params.id);
 });
 
 //============================

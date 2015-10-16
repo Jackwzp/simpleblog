@@ -29,6 +29,7 @@ var db = require('./model/db');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
+var categories = require('./routes/categories');
 
 
 //============================
@@ -110,7 +111,7 @@ app.get('*', function(req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/posts', posts);
-
+app.use('/categories', categories);
 
 
 //============================

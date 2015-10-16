@@ -3,7 +3,7 @@ extends ../layout
 block content
   h1 Create New Post
   br
-  form(method='post', action='/posts/newpost')
+  form(method='post', action='/posts/newpost', enctype='multipart/form-data')
     .form-group
         label Title
         input.form-control(name='title', type='text', required)
