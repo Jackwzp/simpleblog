@@ -37,3 +37,5 @@ process.on('SIGINT', function() {
 // why doesn't require('./model/user') work??      
 require('./../model/user'); 
 require('./../model/post'); 
+require('./../model/category'); 
+
