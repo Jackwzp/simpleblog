@@ -111,7 +111,20 @@ router.put('/:id', authentication.check, function(req, res) {
 //      Individual Post View
 //============================       
 router.get('/:id', authentication.check, function(req,res) {
-    res.send('requesting single post view named ' + req.params.id);
+    Post.findOne({author: req.user.name, title: req.params.id}, function(err, data){
+        if(err) console.error(err);
+
+        // Found matching post, go render view
+        if(data != null) {
+            res.render('posts/singlepost', {
+                title: req.params.id,
+                post: data
+            });
+        } 
+        else {
+            res.send("Can not find such post...");
+        }
+    });
 });
 
 //============================

@@ -5,6 +5,7 @@
 var express = require('express');
 var router = express.Router();
 var authentication = require('./authenticate');
+var Post = require('../model/post');
 var Category = require('../model/category');
 
 //============================
@@ -67,8 +68,27 @@ router.post('/newcategory', authentication.check, function(req, res) {
 //============================
 
 router.get('/:id', function(req, res) {
-    res.send("requesting " + req.params.id);
+    Post.find({author: req.user.name, category: req.params.id}, function(err, data){
+        if(err) console.error(err);
+        res.render('categories/postsbycategory', {
+            title: req.params.id,
+            posts: data
+        });
+    });
 });
+
+//============================
+//      Edit Category
+//============================       
+
+router.put('/:id', function(req, res){
+    res.send('Put request for ' + req.params.id);
+});
+
+
+//============================
+//      Delete Category
+//============================       
 
 
 //============================

@@ -17,7 +17,7 @@ a {
     
 }
 
-ul.success {
+ul.success, ul.error, ul.info {
     padding: 15px;
 }
 
@@ -61,15 +61,17 @@ ul.error li {
     padding: 0;
 }
 
-.post .meta {
-    background-color: grey;
-    border-radius: 5px;
-    padding: 5px;
-    width: 
+.post-details {
+    font-size: 15px;
+    width: 90%;
 }
 
-.post img {
-    width: 100%;
+.post-details i.fa {
+    padding-left: 10px;
+}
+
+.post-details i.fa:first-child {
+    padding: 0;
 }
 
 .category-list {
@@ -85,4 +87,19 @@ ul.error li {
 .list-group-item .badge {
     float: none;
     margin-left: 10px;
+}
+
+.postimage {
+/*    position: relative;
+    float: center;
+    width:  300px;
+    height: 300px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;*/
+    width: 100%;
+}
+
+.postimage img {
+    width: 100%;
 }

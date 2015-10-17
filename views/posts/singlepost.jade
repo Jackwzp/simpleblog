@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            .col-md-8
+                h1 #{post.title}
+                p.post-details
+                    i.fa.fa-user   #{post.author}
+                    i.fa.fa-clock-o   #{moment(post.date).format("MM-DD-YYYY")}
+                    i.fa.fa-folder
+                        a(href='/categories/#{post.category}')   #{post.category}
+                .postimage
+                    img(src='/images/uploads/#{post.postimage}')
+                p!=post.content
+        

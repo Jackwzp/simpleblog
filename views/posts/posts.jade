@@ -9,12 +9,19 @@ block content
         
 
     .container
-        if posts
-            each post in posts
-                .post
-                    h1 
-                        a(href='/posts/#{post.title}') #{post.title}
-                    p.meta by #{post.author}, #{moment(post.date).format("MM-DD-YYYY")}
-                    a(href='/posts/#{post.title}')
-                        img(src='/images/uploads/#{post.postimage}')
-                    p!=post.content
+        .row
+            .col-md-8
+                if posts
+                    each post in posts
+                        .post
+                            h1 
+                                a(href='/posts/#{post.title}') #{post.title}
+                            p.post-details
+                                i.fa.fa-user   #{post.author}
+                                i.fa.fa-clock-o   #{moment(post.date).format("MM-DD-YYYY")}
+                                i.fa.fa-folder
+                                    a(href='/categories/#{post.category}')   #{post.category}
+                            .postimage
+                                a(href='/posts/#{post.title}')
+                                    img(src='/images/uploads/#{post.postimage}')
+                            p!=post.content

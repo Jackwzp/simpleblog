@@ -6,16 +6,18 @@ block content
         <button type="submit" class="btn btn-default"><a href="/categories/newcategory">Add Category</a></button>
 
     .container.category-list
-        if categories
-            ul.list-group
-                each type in categories
-                    li.list-group-item
-                        a(href='/categories/#{type.title}')
-                            !=type.title
-                        span.catedit
-                            a(href='#') Delete
-                        span.catedit
-                            a(href='#') Edit
-                        span.badge
-                            !=23
-                        
+        .row
+            .col-md-8
+                if categories
+                    ul.list-group
+                        each type in categories
+                            li.list-group-item
+                                a(href='/categories/#{type.title}', class='name-category')
+                                    !=type.title
+                                span.catedit
+                                    a(href='#', class='delete-category') Delete
+                                span.catedit
+                                    a(href='#', class='edit-category') Edit
+                                span.badge
+                                    !=23
+    
