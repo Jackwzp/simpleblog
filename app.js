@@ -37,8 +37,6 @@ var categories = require('./routes/categories');
 //============================       
 var app = express();
 
-// app.locals sets a global for you to use throughout views and your app
-app.locals.moment = require('moment');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -99,6 +97,16 @@ app.use(function (req, res, next) {
 //============================
 //    Set our routes
 //============================     
+
+// Set authentication middleware to be called
+// to confirm user is logged in before sending
+// user to any routes.
+//var authenticate = require('./routes/authenticate').check;
+//app.use(authenticate);
+
+// set locals helpers
+app.locals.formatDate = require('./routes/helper').formatDate;
+app.locals.truncate = require('./routes/helper').truncate;
 
 // All path route, used to display navbar
 // properly depending on user logged in or not

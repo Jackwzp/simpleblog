@@ -79,14 +79,14 @@ ul.error li {
 }
 
 
-.catedit {
+.category-btn{
     float: right;
     margin: 0 5px 0 5px;
 }
 
 .list-group-item .badge {
     float: none;
-    margin-left: 10px;
+    margin: 10px 0 10px 10px;
 }
 
 .postimage {

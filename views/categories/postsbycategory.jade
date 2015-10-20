@@ -5,15 +5,21 @@ block content
         h1!=title    
 
     .container
-        if posts
-            each post in posts
-                .post
-                    h1 
-                        a(href='/posts/#{post.title}') #{post.title}
-                    p.post-details
-                        i.fa.fa-user   #{post.author}
-                        i.fa.fa-clock-o   #{moment(post.date).format("MM-DD-YYYY")}
-                    .postimage
-                        a(href='/posts/#{post.title}')
-                            img(src='/images/uploads/#{post.postimage}')
-                    p!=post.content
+        .row
+            .col-md-8
+                if posts
+                    each post in posts
+                        .post
+                            h1 
+                                a(href='/posts/#{post.title}') #{post.title}
+                            p.post-details
+                                i.fa.fa-user   
+                                    !=post.author
+                                i.fa.fa-clock-o   
+                                    != formatDate(post.date)
+                            .postimage
+                                a(href='/posts/#{post.title}')
+                                    img(src='/images/uploads/#{post.postimage}')
+                            p
+                                != truncate(post.content)
+                                a(href='/posts/#{post.title}')  ...Read More

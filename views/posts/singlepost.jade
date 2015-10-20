@@ -6,8 +6,10 @@ block content
             .col-md-8
                 h1 #{post.title}
                 p.post-details
-                    i.fa.fa-user   #{post.author}
-                    i.fa.fa-clock-o   #{moment(post.date).format("MM-DD-YYYY")}
+                    i.fa.fa-user   
+                        !=post.author
+                    i.fa.fa-clock-o   
+                        !=formatDate(post.date)
                     i.fa.fa-folder
                         a(href='/categories/#{post.category}')   #{post.category}
                 .postimage

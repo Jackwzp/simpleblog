@@ -6,8 +6,12 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var upload = multer({dest: './public/images/uploads'}); 
-var authentication = require('./authenticate');
-var Post = require('../model/post');
+var authenticate = require('./helper').authenticate;
+
+// Two ways to get access to the model
+var mongoose = require('mongoose')
+var Post = mongoose.model('Post')
+//var Post = require('../model/post');
 var Category = require('../model/category');
 
 
@@ -17,7 +21,7 @@ var Category = require('../model/category');
 //      Post Home Page
 //============================       
 
-router.get('/', authentication.check, function(req, res, next) {
+router.get('/', authenticate, function(req, res, next) {
     Post.find( {author: req.user.name}, function(err, posts) {
         if(err) console.error(err);
         //console.log(posts);
@@ -33,7 +37,7 @@ router.get('/', authentication.check, function(req, res, next) {
 //============================       
 
 // Get add post view
-router.get('/newpost', authentication.check, function(req,res) {
+router.get('/newpost', authenticate, function(req,res) {
     Category.find({author: req.user.name}, {title: 1}, function(err, categories) {
         if (err) console.error(err);      
         res.render('posts/newpost', {
@@ -47,7 +51,7 @@ router.get('/newpost', authentication.check, function(req,res) {
 
 // Add new post to DB
 // The upload.single('<name>'), the <name> must match the one in the form in view
-router.post('/newpost', authentication.check, upload.single('postimage'), function(req,res) {
+router.post('/newpost', authenticate, upload.single('postimage'), function(req,res) {
     // get form values
     var title = req.body.title;
     var content = req.body.content;
@@ -87,12 +91,12 @@ router.post('/newpost', authentication.check, upload.single('postimage'), functi
 //============================
 
 // edit post page
-router.get('/edit', authentication.check, function(req, res) {
+router.get('/edit', authenticate, function(req, res) {
     res.render('posts/edit');
 });
 
 // insert modified post into db
-router.put('/:id', authentication.check, function(req, res) {
+router.put('/:id', authenticate, function(req, res) {
     res.send('editing single post');
 });
 
@@ -110,7 +114,7 @@ router.put('/:id', authentication.check, function(req, res) {
 //============================
 //      Individual Post View
 //============================       
-router.get('/:id', authentication.check, function(req,res) {
+router.get('/:id', authenticate, function(req,res) {
     Post.findOne({author: req.user.name, title: req.params.id}, function(err, data){
         if(err) console.error(err);
 

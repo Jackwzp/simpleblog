@@ -17,11 +17,15 @@ block content
                             h1 
                                 a(href='/posts/#{post.title}') #{post.title}
                             p.post-details
-                                i.fa.fa-user   #{post.author}
-                                i.fa.fa-clock-o   #{moment(post.date).format("MM-DD-YYYY")}
+                                i.fa.fa-user   
+                                    !=post.author
+                                i.fa.fa-clock-o   
+                                    !=formatDate(post.date)
                                 i.fa.fa-folder
                                     a(href='/categories/#{post.category}')   #{post.category}
                             .postimage
                                 a(href='/posts/#{post.title}')
                                     img(src='/images/uploads/#{post.postimage}')
-                            p!=post.content
+                            p
+                                != truncate(post.content)
+                                a(href='/posts/#{post.title}')  ...Read More
