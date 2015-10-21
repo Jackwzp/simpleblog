@@ -28,3 +28,28 @@ $('#edit-category').on('show.bs.modal', function(event) {
     // set the form field to current title
     $('#edit-cat-form input[name=newtitle]').val(id);
 });
+
+
+//============================
+//  Delete Posts
+//============================       
+
+// Set the data attribute of modal del button
+$('#del-post').on('show.bs.modal', function(event) {
+    var postTitle = $(event.relatedTarget).data('id');
+    $(this).find('#del-post-btn').attr('data-id', postTitle);
+});
+
+// Delete post by DELETE request directly through ajax
+$('#del-post-btn').on('click', function() {
+    // get the post title to be deleted
+    var postTitle = $(this).data('id');
+
+    $.ajax({
+      url: "/posts/" + postTitle,
+      method: "DELETE"
+    });
+
+    // redirect to posts page
+    window.location.replace('/posts');
+});

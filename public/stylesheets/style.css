@@ -84,6 +84,12 @@ ul.error li {
     margin: 0 5px 0 5px;
 }
 
+.post-btn {
+    font-size: 20px;
+    float: right;
+    margin: 0 5px 0 5px;
+}
+
 .list-group-item .badge {
     float: none;
     margin: 10px 0 10px 10px;

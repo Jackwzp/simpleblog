@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  h1 Edit Post
+  br
+  form(method='post', action='/posts/#{post.title}/edit', enctype='multipart/form-data')
+    .form-group
+        label Title
+        input.form-control(name='title', type='text', value='#{post.title}', required)
+    .form-group
+        label Category
+        select.form-control(name='category')
+          each category in categories
+            if(category.title==post.category)
+              option(selected) #{category.title}
+            else
+              option #{category.title}
+    .form-group
+        label Image
+        input.form-control(name='postimage', type='file')
+    .form-group
+        label Content
+        textarea.form-control(name='content', type='text', id='text-body', required)
+          !=post.content
+    <button type="submit" class="btn btn-default">Save</button>
+
+    script(src='/ckeditor/ckeditor.js')
+    script
+      | CKEDITOR.replace('text-body');

@@ -16,6 +16,14 @@ block content
                         .post
                             h1 
                                 a(href='/posts/#{post.title}') #{post.title}
+                                span.post-btn
+                                    a(data-toggle='modal', data-target='#del-post', href='#del-post', data-id='#{post.title}')
+                                        i.fa.fa-trash-o
+                                    
+                                span.post-btn
+                                    a(href='/posts/#{post.title}/edit') 
+                                        i.fa.fa-pencil
+
                             p.post-details
                                 i.fa.fa-user   
                                     !=post.author
@@ -29,3 +37,17 @@ block content
                             p
                                 != truncate(post.content)
                                 a(href='/posts/#{post.title}')  ...Read More
+
+
+    // Modal for Deleting Post
+    #del-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='DelPostModal')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h4#DelPostModal.modal-title Are you sure?
+          .modal-footer            
+            button.btn.btn-danger(type="submit", id='del-post-btn') Delete
+            button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+

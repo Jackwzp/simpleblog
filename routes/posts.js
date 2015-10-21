@@ -90,21 +90,71 @@ router.post('/newpost', authenticate, upload.single('postimage'), function(req,r
 //      Edit Post
 //============================
 
-// edit post page
-router.get('/edit', authenticate, function(req, res) {
-    res.render('posts/edit');
+// get edit post page
+router.get('/:id/edit', authenticate, function(req, res) {
+    Post.findOne({author: req.user.name, title: req.params.id}, function(err, data) {
+        Category.find({author: req.user.name}, {title: 1}, function(err, categories) {
+            if (err) console.log(err);
+
+            res.render('posts/editpost', {
+                title: data.title,
+                post: data,
+                categories: categories
+            });
+        });
+    });
 });
 
-// insert modified post into db
-router.put('/:id', authenticate, function(req, res) {
-    res.send('editing single post');
+
+// update edited post in DB
+router.post('/:id/edit', authenticate, upload.single('postimage'), function(req, res) {
+    var postQuery = {author: req.user.name, title: req.params.id};
+
+    // Find the original Post
+    Post.findOne(postQuery, {postimage: 1}, function(err, data) {
+        if (err) console.error(err);
+
+        // get form values
+        var title = req.body.title;
+        var content = req.body.content;
+        var category = req.body.category;
+
+        // check for image
+        if (req.file) {
+            console.log("Uploading file...");
+            var postImgName = req.file.filename;
+        } else {        
+            // keep original image
+            var postImgName = data.postimage;
+        }
+
+        var update = {
+            title: title, 
+            content: content,
+            category: category,
+            postimage: postImgName
+        };
+
+
+        // update DB and redirect to post page
+        Post.update(postQuery, update).exec();
+        res.redirect('/posts/' + title);
+    });
+
 });
+
 
 //============================
 //      Delete Post
 //============================       
 
+// insert modified post into db
+router.delete('/:id', authenticate, function(req, res) {
+    console.log("Deleting post named " + req.params.id);
+    var postQuery = {author: req.user.name, title: req.params.id};
 
+    Post.remove(postQuery).exec();
+});
 
 /*
  * This Needs to be placed at the end in order to render other routes before it.
