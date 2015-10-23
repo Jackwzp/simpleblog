@@ -1,0 +1,47 @@
+// Modal for Adding Category
+#add-category.modal.fade(tabindex='-1', role='dialog', aria-labelledby='AddModal')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h4#AddModal.modal-title Add New Category
+      .modal-body
+        form(method='post', action='/categories', id='add-cat-form')
+            .form-group
+                input.form-control(name='title', type='text', placeholder='New Category Name', required)
+            .modal-footer
+                button.btn.btn-primary(type="submit") Add
+                button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+
+// Modal for Editing Category
+#edit-category.modal.fade(tabindex='-1', role='dialog', aria-labelledby='EditModal')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h4#EditModal.modal-title Edit Category Name
+      .modal-body
+        form(method='post', id='edit-cat-form')
+            .form-group
+                input.form-control(type='hidden', name='_method', value='PUT')
+                input.form-control(name='newtitle', type='text', required)
+            .modal-footer
+                button.btn.btn-primary(type="submit") Edit
+                button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+
+// Modal for Deleting Category
+#del-category.modal.fade(tabindex='-1', role='dialog', aria-labelledby='DelModal')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h4#DelModal.modal-title Are you sure?
+      .modal-footer
+        form(method='post', id='del-cat-form')
+            .form-group
+                input.form-control(type='hidden', name='_method', value='DELETE')
+            button.btn.btn-danger(type="submit") Delete
+            button.btn.btn-default(type='button', data-dismiss='modal') Cancel

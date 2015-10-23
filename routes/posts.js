@@ -164,15 +164,16 @@ router.delete('/:id', authenticate, function(req, res) {
 //============================
 //      Individual Post View
 //============================       
-router.get('/:id', authenticate, function(req,res) {
-    Post.findOne({author: req.user.name, title: req.params.id}, function(err, data){
+router.get('/:author/:title', function(req,res) {
+    Post.findOne({author: req.params.author, title: req.params.title}, function(err, data){
         if(err) console.error(err);
 
         // Found matching post, go render view
         if(data != null) {
             res.render('posts/singlepost', {
                 title: req.params.id,
-                post: data
+                post: data,
+                comments: data.comments
             });
         } 
         else {
@@ -180,6 +181,36 @@ router.get('/:id', authenticate, function(req,res) {
         }
     });
 });
+
+//============================
+//      Add Comments
+//============================       
+
+router.post('/:id/addcomment', authenticate, function(req, res) {
+    var postQuery = {author: req.user.name, title: req.params.id};
+
+    Post.findOne(postQuery, function(err, data) {
+        // get form values
+        var name = req.body.name;
+        var email = req.body.email;
+        var body = req.body.comment;
+
+        var comment = {
+            name: name, 
+            email: email,
+            body: body
+        };
+
+        data.comments.push(comment);
+        data.save(function(err) {
+            if(err) throw err;
+            req.flash('success', "Comments Added");
+            res.redirect('back');
+        });
+    });
+
+});
+
 
 //============================
 //      Export Modules (Always Do this)

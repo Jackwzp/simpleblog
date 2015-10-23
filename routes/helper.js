@@ -14,6 +14,7 @@ exports.authenticate = function(req, res, next) {
     if (req.isAuthenticated()) {
         next();
     } else {
+        req.session.redirectURL = req.originalUrl;
         res.redirect('/users/login');
     }
 }

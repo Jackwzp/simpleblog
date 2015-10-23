@@ -16,7 +16,8 @@ var PostSchema = mongoose.Schema({
     author: {type: String, required: true },
     date: { type: Date, default: Date.now },
     category: {type: String},
-    postimage: { type: String}
+    postimage: { type: String},
+    comments: {type: []}
 });
 
 

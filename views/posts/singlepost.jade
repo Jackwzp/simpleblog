@@ -3,7 +3,7 @@ extends ../layout
 block content
     .container
         .row
-            .col-md-8
+            .col-md-8.col-md-offset-2
                 h1 #{post.title}
                 span.post-btn
                     a(data-toggle='modal', data-target='#del-post', href='#del-post', data-id='#{post.title}')
@@ -22,16 +22,29 @@ block content
                 .postimage
                     img(src='/images/uploads/#{post.postimage}')
                 p!=post.content
-    
 
-    // Modal for Deleting Post
-    #del-post.modal.fade(tabindex='-1', role='dialog', aria-labelledby='DelPostModal')
-      .modal-dialog(role='document')
-        .modal-content
-          .modal-header
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') ×
-            h4#DelPostModal.modal-title Are you sure?
-          .modal-footer            
-            button.btn.btn-danger(type="submit", id='del-post-btn') Delete
-            button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+        .row
+            .col-md-8.col-md-offset-2
+                if comments
+                    h3 Comments
+                    each comment in comments
+                        p.meta
+                            !=comment.name
+                            !=comment.email
+                        p!= comment.body
+                hr
+                h3 Add Comment
+                form.comment-form(method='post', action='/posts/#{post.title}/addcomment')
+                    .form-group
+                        label Name
+                        input.form-control(name='name', type='text', required)
+                    .form-group
+                        label Email
+                        input.form-control(name='email', type='email', required)
+                    .form-group
+                        label Your Comment
+                        textarea.form-control(name='comment', type='text' required)
+                    button.btn.btn-default(type='submit') Submit
+
+
+    include ../templates/post_modal.jade
