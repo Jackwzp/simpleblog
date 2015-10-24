@@ -1,4 +1,4 @@
-extends ../layout
+extends ../../views/layout
 
 block content
     .container
@@ -9,15 +9,15 @@ block content
                     each post in posts
                         .post
                             h1 
-                                a(href='/posts/#{post.title}') #{post.title}
+                                a(href='/posts/#{post.author}/#{post.title}') #{post.title}
                             p.post-details
                                 i.fa.fa-user   
                                     !=post.author
                                 i.fa.fa-clock-o   
                                     != formatDate(post.date)
                             .postimage
-                                a(href='/posts/#{post.title}')
+                                a(href='/posts/#{post.author}/#{post.title}')
                                     img(src='/images/uploads/#{post.postimage}')
                             p
                                 != truncate(post.content)
-                                a(href='/posts/#{post.title}')  ...Read More
+                                a(href='/posts/#{post.author}/#{post.title}')  ...Read More

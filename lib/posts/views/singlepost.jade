@@ -1,17 +1,18 @@
-extends ../layout
+extends ../../views/layout
 
 block content
     .container
         .row
             .col-md-8.col-md-offset-2
                 h1 #{post.title}
-                span.post-btn
-                    a(data-toggle='modal', data-target='#del-post', href='#del-post', data-id='#{post.title}')
-                        i.fa.fa-trash-o
-                    
-                span.post-btn
-                    a(href='/posts/#{post.title}/edit') 
-                        i.fa.fa-pencil
+                if (user==post.author)
+                    span.post-btn
+                        a(data-toggle='modal', data-target='#del-post', href='#del-post', data-id='#{post.title}')
+                            i.fa.fa-trash-o
+                        
+                    span.post-btn
+                        a(href='/posts/#{post.title}/edit') 
+                            i.fa.fa-pencil
                 p.post-details
                     i.fa.fa-user   
                         !=post.author
@@ -47,4 +48,4 @@ block content
                     button.btn.btn-default(type='submit') Submit
 
 
-    include ../templates/post_modal.jade
+    include post_modal.jade

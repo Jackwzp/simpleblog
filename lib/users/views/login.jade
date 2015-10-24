@@ -1,0 +1,14 @@
+extends ../../views/layout
+
+block content
+  .container
+    h1 Login
+    p Please login for access
+    form(method='post', action='/users/login')
+      .form-group
+          label Username
+          input.form-control(name='username', type='text', placeholder='Username', required)
+      .form-group
+          label Password
+          input.form-control(name='password', type='password', placeholder='Password', required)
+      button.btn.btn-default(type='submit') Login

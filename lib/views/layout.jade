@@ -35,8 +35,10 @@ html
                         li
                             a(href='/users/logout') Logout
     .container
-        // != messages() to display flash messages from connect-flash module
-        != messages()
+        .row
+            .col-md-8.col-md-offset-2
+                // != messages() to display flash messages from connect-flash module
+                != messages()
         block content
 
 
