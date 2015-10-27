@@ -3,7 +3,7 @@ extends ../../views/layout
 block content
   h1 Edit Post
   br
-  form(method='post', action='/posts/#{post.title}/edit', enctype='multipart/form-data')
+  form(method='post', action=PostSlug.edit(post), enctype='multipart/form-data')
     .form-group
         label Title
         input.form-control(name='title', type='text', value='#{post.title}', required)

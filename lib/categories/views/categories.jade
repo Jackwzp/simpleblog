@@ -16,7 +16,7 @@ block content
                     ul.list-group
                         each type in categories
                             li.list-group-item
-                                a(href='/categories/#{type.title}', class='name-category')
+                                a(href=CategorySlug.get(type.title), class='name-category')
                                     !=type.title
                                 span.category-btn
                                     button.btn.btn-danger.del-cat-btn(type='button', data-toggle='modal', data-target='#del-category', data-id='#{type.title}') Delete

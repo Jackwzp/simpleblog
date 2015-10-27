@@ -16,7 +16,7 @@ block content
                     each post in posts
                         .post
                             h1 
-                                a(href='/posts/#{post.author}/#{post.title}') #{post.title}
+                                a(href=PostSlug.get(post)) #{post.title}
                                 
                             p.post-details
                                 i.fa.fa-user   
@@ -24,13 +24,13 @@ block content
                                 i.fa.fa-clock-o   
                                     !=formatDate(post.date)
                                 i.fa.fa-folder
-                                    a(href='/categories/#{post.category}')   #{post.category}
+                                    a(href=CategorySlug.get(post.category))   #{post.category}
                             .postimage
-                                a(href='/posts/#{post.author}/#{post.title}')
+                                a(href=PostSlug.get(post))
                                     img(src='/images/uploads/#{post.postimage}')
                             p
                                 != truncate(post.content)
-                                a(href='/posts/#{post.title}')  ...Read More
+                                a(href=PostSlug.get(post))  ...Read More
 
 
 

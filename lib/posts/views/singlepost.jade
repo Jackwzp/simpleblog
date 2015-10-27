@@ -11,7 +11,7 @@ block content
                             i.fa.fa-trash-o
                         
                     span.post-btn
-                        a(href='/posts/#{post.title}/edit') 
+                        a(href=PostSlug.edit(post)) 
                             i.fa.fa-pencil
                 p.post-details
                     i.fa.fa-user   
@@ -19,7 +19,7 @@ block content
                     i.fa.fa-clock-o   
                         !=formatDate(post.date)
                     i.fa.fa-folder
-                        a(href='/categories/#{post.category}')   #{post.category}
+                        a(href=CategorySlug.get(post.category))   #{post.category}
                 .postimage
                     img(src='/images/uploads/#{post.postimage}')
                 p!=post.content

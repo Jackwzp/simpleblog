@@ -6,8 +6,9 @@ block content
             .col-md-8.col-md-offset-2
                 h1 Members Area
                 p Welcome to members area
-
-                <button type="submit" class="btn btn-default"><a href="/posts/newpost">Add Post</a></button>
+                button.btn.btn-default(type='submit')
+                    a(href='/posts/newpost') Add Post
+                
         
 
     .container
@@ -17,13 +18,13 @@ block content
                     each post in posts
                         .post
                             h1 
-                                a(href='/posts/#{post.author}/#{post.title}') #{post.title}
+                                a(href=PostSlug.get(post)) #{post.title}
                                 span.post-btn
                                     a(data-toggle='modal', data-target='#del-post', href='#del-post', data-id='#{post.title}')
                                         i.fa.fa-trash-o
                                     
                                 span.post-btn
-                                    a(href='/posts/#{post.title}/edit') 
+                                    a(href=PostSlug.edit(post)) 
                                         i.fa.fa-pencil
 
                             p.post-details
@@ -32,13 +33,13 @@ block content
                                 i.fa.fa-clock-o   
                                     !=formatDate(post.date)
                                 i.fa.fa-folder
-                                    a(href='/categories/#{post.category}')   #{post.category}
+                                    a(href=CategorySlug.get(post.category))   #{post.category}
                             .postimage
-                                a(href='/posts/#{post.author}/#{post.title}')
+                                a(href=PostSlug.get(post))
                                     img(src='/images/uploads/#{post.postimage}')
                             p
                                 != truncate(post.content)
-                                a(href='/posts/#{post.author}/#{post.title}')  ...Read More
+                                a(href=PostSlug.get(post))  ...Read More
 
 
     include post_modal.jade

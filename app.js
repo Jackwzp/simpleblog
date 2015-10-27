@@ -12,6 +12,7 @@ app.set('views', path.join(__dirname, 'lib/views'));
 //============================       
 
 require('_/middleware').config(app);
+require('_/middleware').setLocals(app);
 
 //============================
 //    Set our routes
